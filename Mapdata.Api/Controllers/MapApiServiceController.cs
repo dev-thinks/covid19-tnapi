@@ -34,6 +34,7 @@ namespace Mapdata.Api.Controllers
         /// <param name="geoJsonBusiness"></param>
         /// <param name="chartData"></param>
         /// <param name="gridData"></param>
+        /// <param name="comment"></param>
         public MapApiServiceController(ILogger<MapApiServiceController> logger, GeoJsonBusiness geoJsonBusiness, 
             ChartDataBusiness chartData, GridDataBusiness gridData, CommentBusiness comment)
         {
