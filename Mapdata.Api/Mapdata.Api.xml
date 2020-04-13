@@ -1,0 +1,457 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapdata.Api</name>
+    </assembly>
+    <members>
+        <member name="T:Mapdata.Api.Business.ChartDataBusiness">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Business.ChartDataBusiness.#ctor(Mapdata.Api.DbContexts.TnDistrictContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Mapdata.Api.Business.ChartDataBusiness.GetChartCasesDataAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dtName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Business.ChartDataBusiness.GetChartDeathDataAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Mapdata.Api.Business.CommentBusiness">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Business.CommentBusiness.#ctor(Mapdata.Api.DbContexts.TnDistrictContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Mapdata.Api.Business.CommentBusiness.SaveComment(Mapdata.Api.Models.CommentRequest)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Mapdata.Api.Business.GeoJsonBusiness">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Business.GeoJsonBusiness.#ctor(Mapdata.Api.DbContexts.TnDistrictContext)">
+            <summary>
+            ctor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Mapdata.Api.Business.GeoJsonBusiness.GetDataAsync">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Business.GridDataBusiness">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Business.GridDataBusiness.#ctor(Mapdata.Api.DbContexts.TnDistrictContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Mapdata.Api.Business.GridDataBusiness.GetStateWideAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Business.GridDataBusiness.GetGridDataAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Mapdata.Api.Controllers.MapApiServiceController">
+            <summary>
+            Service hour api controllers
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.#ctor(Microsoft.Extensions.Logging.ILogger{Mapdata.Api.Controllers.MapApiServiceController},Mapdata.Api.Business.GeoJsonBusiness,Mapdata.Api.Business.ChartDataBusiness,Mapdata.Api.Business.GridDataBusiness,Mapdata.Api.Business.CommentBusiness)">
+            <summary>
+            ctor
+            </summary>
+            <param name="logger"></param>
+            <param name="geoJsonBusiness"></param>
+            <param name="chartData"></param>
+            <param name="gridData"></param>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.GetDataAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.GetChartDataAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dtName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.GetChartDeathDataAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dtName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.GetStateDataAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.GetGridDataAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mapdata.Api.Controllers.MapApiServiceController.AddComment(Mapdata.Api.Models.CommentRequest)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Mapdata.Api.Models.ChartDataResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Models.ChartDataResult.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Legend">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Credits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Chart">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Subtitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.XAxis">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.YAxis">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Tooltip">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.Series">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.ChartDataResult.PlotOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Chart">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Chart.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Series">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Series.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Series.Color">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Series.Data">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Subtitle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Subtitle.UseHtml">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Subtitle.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Title.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Tooltip">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Tooltip.ValueSuffix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.XAxis">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.XAxis.Categories">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.YAxis">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Models.YAxis.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.YAxis.AllowDecimal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.YAxis.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Legend">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Legend.Enabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.Credits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.Credits.Enabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.PlotOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Models.PlotOptions.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.PlotOptions.LineOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.LineOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mapdata.Api.Models.LineOptions.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.LineOptions.DataLabels">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.DataLabels">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.DataLabels.Enabled">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.CommentRequest">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.CommentRequest.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.CommentRequest.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.CommentRequest.Comments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.GridDataResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.GridDataResult.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.GridDataResult.TotalCases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.GridDataResult.Death">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.GridDataResult.Recovered">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.MapDistrictDataResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.MapDistrictDataResult.DistrictId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.MapDistrictDataResult.DistrictName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.MapDistrictDataResult.TotalCases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.MapDistrictDataResult.Death">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.MapDistrictDataResult.Recovered">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.MapDistrictDataResult.TodayCases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Mapdata.Api.Models.StateWideResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.StateWideResult.TotalCases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.StateWideResult.TotalDeath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Mapdata.Api.Models.StateWideResult.Recovered">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
