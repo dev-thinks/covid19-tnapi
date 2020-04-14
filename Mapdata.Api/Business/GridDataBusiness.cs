@@ -1,4 +1,5 @@
-﻿using Mapdata.Api.DbContexts;
+﻿using System;
+using Mapdata.Api.DbContexts;
 using Mapdata.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -93,6 +94,45 @@ namespace Mapdata.Api.Business
                 .OrderBy(s => s.Name);
 
             result.AddRange(groupByData);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dtName"></param>
+        /// <returns></returns>
+        public async Task<GridSummaryResult> GetGridSummaryAsync(string dtName)
+        {
+            var result = new GridSummaryResult { DistrictName = dtName };
+
+            var dt = await _context.District.Where(s => s.Name == dtName).FirstOrDefaultAsync();
+
+            var districtId = dt.Id;
+
+            var dailyDtResult = await _context.DailyData
+                    .Where(s => s.DistrictId == districtId).ToListAsync();
+
+            if (dailyDtResult != null && dailyDtResult.Count > 0)
+            {
+                result.TotalCases = (int)dailyDtResult.Sum(a => a.Cases);
+                result.TotalRecovered = (int)dailyDtResult.Sum(a => a.Recovered);
+                result.TotalDeath = (int)dailyDtResult.Sum(a => a.Death);
+            }
+
+            var todayDate = DateTime.Now.ToString("dd/MM");
+
+            var todayDtResult = await _context.DailyData
+                                .Where(s => s.DistrictId == districtId && s.Date == todayDate)
+                                .FirstOrDefaultAsync();
+
+            if (todayDtResult != null)
+            {
+                result.NewCases = (int)todayDtResult.Cases;
+                result.NewRecovered = (int)todayDtResult.Recovered;
+                result.NewDeath = (int)todayDtResult.Death;
+            }
 
             return result;
         }

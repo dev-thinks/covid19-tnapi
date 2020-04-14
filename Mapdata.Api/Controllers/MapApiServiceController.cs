@@ -35,7 +35,7 @@ namespace Mapdata.Api.Controllers
         /// <param name="chartData"></param>
         /// <param name="gridData"></param>
         /// <param name="comment"></param>
-        public MapApiServiceController(ILogger<MapApiServiceController> logger, GeoJsonBusiness geoJsonBusiness, 
+        public MapApiServiceController(ILogger<MapApiServiceController> logger, GeoJsonBusiness geoJsonBusiness,
             ChartDataBusiness chartData, GridDataBusiness gridData, CommentBusiness comment)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -115,6 +115,26 @@ namespace Mapdata.Api.Controllers
             var data = await _gridData.GetGridDataAsync();
 
             return Ok(data);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dtName"></param>
+        /// <returns></returns>
+        [ApiVersion("1.0")]
+        [HttpGet("gridsummary")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ChartDataResult))]
+        public async Task<IActionResult> GetGridSummaryAsync(string dtName)
+        {
+            if (!string.IsNullOrEmpty(dtName))
+            {
+                var data = await _gridData.GetGridSummaryAsync(dtName);
+
+                return Ok(data);
+            }
+
+            return BadRequest("Bad parameter");
         }
 
         /// <summary>
