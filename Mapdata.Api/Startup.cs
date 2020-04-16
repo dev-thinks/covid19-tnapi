@@ -34,6 +34,8 @@ namespace Mapdata.Api
                     })
                 .AddNewtonsoftJson();
 
+            services.AddMemoryCache();
+
             // Register db context
             var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = Configuration["DefaultConnection"] };
             var connectionString = connectionStringBuilder.ToString();
