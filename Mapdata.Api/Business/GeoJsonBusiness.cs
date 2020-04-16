@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,11 +18,16 @@ namespace Mapdata.Api.Business
         private readonly TnDistrictContext _context;
         private readonly IMemoryCache _cache;
 
+        private readonly MemoryCacheEntryOptions _cacheOptions = new MemoryCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(6)
+        };
+        
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="context"></param>
-
+        /// <param name="cache"></param>
         public GeoJsonBusiness(TnDistrictContext context, IMemoryCache cache)
         {
             _cache = cache;
@@ -35,50 +39,53 @@ namespace Mapdata.Api.Business
         /// </summary>
         public async Task<dynamic> GetDataAsync()
         {
-            var json = string.Empty;
-            if (!_cache.TryGetValue("geojsoncache", out json))
+            if (!_cache.TryGetValue("geojsondata", out JToken deserialized))
             {
-                using (StreamReader r = new StreamReader("Data/map.geojson"))
+                if (!_cache.TryGetValue("geojsoncache", out string json))
                 {
-                    json = r.ReadToEnd();
+                    using (StreamReader r = new StreamReader("Data/map.geojson"))
+                    {
+                        json = r.ReadToEnd();
+                    }
+
+                    _cache.Set("geojsoncache", json, _cacheOptions);
                 }
-            }
 
-            var deserialized = JToken.Parse(json);
+                deserialized = JToken.Parse(json);
 
-            var features = deserialized["features"].Value<JArray>();
+                var features = deserialized["features"].Value<JArray>();
 
-            foreach (var sub_obj in features.Children())
-            {
-                var properties = sub_obj["properties"];
-
-                if (properties != null)
+                foreach (var subObj in features.Children())
                 {
-                    var district = properties?.FirstOrDefault().Value<JProperty>();
+                    var properties = subObj["properties"];
 
-                    System.Diagnostics.Debug.WriteLine($"Name: {district.Name}\t Value: {district.Value}");
+                    if (properties != null)
+                    {
+                        var district = properties?.FirstOrDefault().Value<JProperty>();
 
-                    var districtData = await GetDataForDistrictAsync(district.Value.ToString());
+                        var districtData = await GetDataForDistrictAsync(district.Value.ToString());
 
-                    properties["colorCode"] = "Blue";
-                    if (districtData != null && districtData.TotalCases > 0)
-                    {
-                        properties["totalCases"] = districtData.TotalCases.ToString();
-                    }
-                    else
-                    {
-                        properties["totalCases"] = "--";
-                    }
+                        if (districtData != null && districtData.TotalCases > 0)
+                        {
+                            properties["totalCases"] = districtData.TotalCases.ToString();
+                        }
+                        else
+                        {
+                            properties["totalCases"] = "--";
+                        }
 
-                    if (districtData != null && districtData.TodayCases > 0)
-                    {
-                        properties["newCases"] = districtData.TodayCases.ToString();
-                    }
-                    else
-                    {
-                        properties["newCases"] = "--";
+                        if (districtData != null && districtData.TodayCases > 0)
+                        {
+                            properties["newCases"] = districtData.TodayCases.ToString();
+                        }
+                        else
+                        {
+                            properties["newCases"] = "--";
+                        }
                     }
                 }
+
+                _cache.Set("geojsondata", deserialized, _cacheOptions);
             }
 
             return deserialized;
@@ -131,20 +138,5 @@ namespace Mapdata.Api.Business
 
             return null;
         }
-
-        private async Task<(List<Entities.StateCumulative> data, List<string> dates)> GetStateCumulativeAsync()
-        {
-            var stateData = await _context.StateCumulative
-                .OrderByDescending(s => s.Id)
-                .Take(10)
-                .ToListAsync();
-
-            stateData = stateData.OrderBy(s => s.Id).ToList();
-
-            var dates = stateData.Select(s => s.Date).ToList();
-
-            return (stateData, dates);
-        }
-
     }
 }
