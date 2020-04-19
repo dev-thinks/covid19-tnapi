@@ -4,6 +4,7 @@ using Mapdata.Api.DbContexts;
 using Mapdata.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +37,11 @@ namespace Mapdata.Api
                     })
                 .AddNewtonsoftJson();
 
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<BrotliCompressionProvider>();
+            });
+            
             services.AddScoped<IAzureTableStorage<CommentRequest>>(factory =>
                 new AzureTableStorage<CommentRequest>(
                     new AzureTableSettings(
@@ -46,10 +52,6 @@ namespace Mapdata.Api
             services.AddMemoryCache();
 
             // Register db context
-            // var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = Configuration["DefaultConnection"] };
-            // var connectionString = connectionStringBuilder.ToString();
-            // var connection = new SqliteConnection(connectionString);
-
             services.AddDbContext<TnDistrictContext>(options =>
             {
                 //options.UseSqlite("Filename=./Data/tamilnadu_data.sqlite");
@@ -97,6 +99,8 @@ namespace Mapdata.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseResponseCompression();
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
