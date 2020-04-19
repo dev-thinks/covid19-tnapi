@@ -1,3 +1,4 @@
+using System;
 using Mapdata.Api.Business;
 using Mapdata.Api.DbContexts;
 using Mapdata.Api.Models;
@@ -82,8 +83,15 @@ namespace Mapdata.Api
             services.AddTransient<GeoJsonBusiness>();
             services.AddTransient<ChartDataBusiness>();
             services.AddTransient<GridDataBusiness>();
-            services.AddTransient<IComment, CommentInAzure>();
-            // services.AddTransient<IComment, CommentBusiness>();
+
+            if (Convert.ToBoolean(Configuration["UseAzureTable"]))
+            {
+                services.AddTransient<IComment, CommentInAzure>();
+            }
+            else
+            {
+                services.AddTransient<IComment, CommentBusiness>();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
