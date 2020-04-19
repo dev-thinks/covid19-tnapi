@@ -1,11 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Service.Infrastructure.AzureTable;
 
 namespace Mapdata.Api.Models
 {
     /// <summary>
     /// 
     /// </summary>
-    public class CommentRequest
+    public class CommentRequest : AzureTableEntity
     {
         /// <summary>
         /// 

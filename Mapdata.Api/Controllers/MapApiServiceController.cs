@@ -25,7 +25,7 @@ namespace Mapdata.Api.Controllers
         private readonly GeoJsonBusiness _geoJsonBusiness;
         private readonly ChartDataBusiness _chartData;
         private readonly GridDataBusiness _gridData;
-        private readonly CommentBusiness _comment;
+        private readonly IComment _comment;
 
         /// <summary>
         /// ctor
@@ -36,7 +36,7 @@ namespace Mapdata.Api.Controllers
         /// <param name="gridData"></param>
         /// <param name="comment"></param>
         public MapApiServiceController(ILogger<MapApiServiceController> logger, GeoJsonBusiness geoJsonBusiness,
-            ChartDataBusiness chartData, GridDataBusiness gridData, CommentBusiness comment)
+            ChartDataBusiness chartData, GridDataBusiness gridData, IComment comment)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _geoJsonBusiness = geoJsonBusiness;
@@ -137,6 +137,18 @@ namespace Mapdata.Api.Controllers
             return BadRequest("Bad parameter");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [ApiVersion("1.0")]
+        [HttpGet("getcomment")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentRequest>))]
+        public async Task<IActionResult> GetComment()
+        {
+            return Ok(await _comment.GetComments());
+        }
+        
         /// <summary>
         /// 
         /// </summary>

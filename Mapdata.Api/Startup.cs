@@ -1,12 +1,13 @@
 using Mapdata.Api.Business;
 using Mapdata.Api.DbContexts;
+using Mapdata.Api.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Service.Infrastructure.AzureTable;
 using Service.Infrastructure.Filters;
 using Service.Infrastructure.Middlewares;
 using Service.Infrastructure.Utils;
@@ -34,13 +35,19 @@ namespace Mapdata.Api
                     })
                 .AddNewtonsoftJson();
 
+            services.AddScoped<IAzureTableStorage<CommentRequest>>(factory =>
+                new AzureTableStorage<CommentRequest>(
+                    new AzureTableSettings(
+                        storageAccount: Configuration["AzureStorageAccount"],
+                        storageKey: Configuration["AzureStorageKey"],
+                        tableName: Configuration["AzureTableName"])));
+            
             services.AddMemoryCache();
 
             // Register db context
-            var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = Configuration["DefaultConnection"] };
-            var connectionString = connectionStringBuilder.ToString();
-
-            var connection = new SqliteConnection(connectionString);
+            // var connectionStringBuilder = new SqliteConnectionStringBuilder { DataSource = Configuration["DefaultConnection"] };
+            // var connectionString = connectionStringBuilder.ToString();
+            // var connection = new SqliteConnection(connectionString);
 
             services.AddDbContext<TnDistrictContext>(options =>
             {
@@ -75,7 +82,8 @@ namespace Mapdata.Api
             services.AddTransient<GeoJsonBusiness>();
             services.AddTransient<ChartDataBusiness>();
             services.AddTransient<GridDataBusiness>();
-            services.AddTransient<CommentBusiness>();
+            services.AddTransient<IComment, CommentInAzure>();
+            // services.AddTransient<IComment, CommentBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
