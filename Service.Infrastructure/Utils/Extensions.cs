@@ -1,5 +1,4 @@
 ﻿using Refit;
-using ServiceStack.Text;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -236,8 +235,8 @@ namespace Service.Common.Utils
                                     {
                                         errorInfo.AppendLine(agRefitException.ToString());
                                         errorInfo.AppendLine($"API Request URL: {agRefitException.Uri}").AppendLine();
-                                        errorInfo.AppendLine($"API Request Message: {agRefitException.RequestMessage.SerializeAndFormat()}");
-                                        errorInfo.AppendLine($"API Error Content: {agRefitException.Content.SerializeAndFormat()}");
+                                        errorInfo.AppendLine($"API Request Message: {agRefitException.RequestMessage}");
+                                        errorInfo.AppendLine($"API Error Content: {agRefitException.Content}");
                                     }
                                     catch (Exception)
                                     {
@@ -258,8 +257,8 @@ namespace Service.Common.Utils
                             {
                                 errorInfo.AppendLine(refitEx.ToString());
                                 errorInfo.AppendLine($"API Request URL: {refitEx.Uri}").AppendLine();
-                                errorInfo.AppendLine($"API Request Message: {refitEx.RequestMessage.SerializeAndFormat()}");
-                                errorInfo.AppendLine($"API Error Content: {refitEx.Content.SerializeAndFormat()}");
+                                errorInfo.AppendLine($"API Request Message: {refitEx.RequestMessage}");
+                                errorInfo.AppendLine($"API Error Content: {refitEx.Content}");
 
                                 //var refitContent = refitEx.GetContentAsAsync<Dictionary<string, string>>().Result;
 
