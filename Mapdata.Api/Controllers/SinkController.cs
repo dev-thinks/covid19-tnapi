@@ -25,14 +25,20 @@ namespace Mapdata.Api.Controllers
             _logger = logger;
         }
         
+        /// <summary>
+        /// Gets current server machine time zone (supports both windows/non-windows)
+        /// </summary>
+        /// <returns></returns>
         [ApiVersion("1.0")]
         [HttpGet("gettime")]
         public IActionResult GetTime()
         {
             _logger.LogDebug("{machine}", new
             {
-                RuntimeInformation.OSDescription,
                 RuntimeInformation.FrameworkDescription,
+                RuntimeInformation.ProcessArchitecture,
+                RuntimeInformation.OSArchitecture,
+                RuntimeInformation.OSDescription
             });
             
             var timeZone = TimeZoneInfo.GetSystemTimeZones().Any(x => x.Id == "Eastern Standard Time") ? 
